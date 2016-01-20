@@ -6,13 +6,13 @@
 /*   By: cfelbacq <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/19 15:28:48 by cfelbacq          #+#    #+#             */
-/*   Updated: 2016/01/19 15:41:03 by cfelbacq         ###   ########.fr       */
+/*   Updated: 2016/01/20 14:34:04 by cfelbacq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-char	***fill_tmp_tab(char **string_tab, char ***string, t_max *max)
+char	***fill_tmp_tab(char **string_tab, char ***string, t_env *data)
 {
 	int i;
 	int j;
@@ -22,7 +22,7 @@ char	***fill_tmp_tab(char **string_tab, char ***string, t_max *max)
 		i++;
 	string = (char ***)ft_memalloc(sizeof(char **) * i + 1);
 	string[i] = NULL;
-	max->y = i;
+	data->max_y = i;
 	i = 0;
 	j = 0;
 	while (string_tab[i] != NULL)
@@ -33,19 +33,19 @@ char	***fill_tmp_tab(char **string_tab, char ***string, t_max *max)
 	return (string);
 }
 
-int		**fill_integer_tab(char **string_tab, int **integer_tab, t_max *max)
+int		**fill_integer_tab(char **string_tab, int **integer_tab, t_env *data)
 {
 	int i;
 	char ***string;
 	int j;
 	int len_of_line;
 	
-	len_of_line = count_len_nb(string_tab, max);
+	len_of_line = count_len_nb(string_tab, data);
 	i = 0;
 	j = 0;
 	string = NULL;
-	string = fill_tmp_tab(string_tab, string, max);
-	integer_tab = (int **)ft_memalloc(sizeof(int *) * max->y);
+	string = fill_tmp_tab(string_tab, string, data);
+	integer_tab = (int **)ft_memalloc(sizeof(int *) * data->max_y);
 	while (string[i] != NULL)
 	{
 		integer_tab[i] = (int *)ft_memalloc(sizeof(int) * len_of_line);
@@ -63,7 +63,7 @@ int		**fill_integer_tab(char **string_tab, int **integer_tab, t_max *max)
 }
 
 int		**fill_tab(int fd, char **string_tab, char *file, int **integer_tab,\
-		t_max *max)
+		t_env *data)
 {
 	int i;
 	char *line;
@@ -88,6 +88,6 @@ int		**fill_tab(int fd, char **string_tab, char *file, int **integer_tab,\
 		string_tab[i][j] = '\0';
 		i++;
 	}
-	integer_tab = fill_integer_tab(string_tab, integer_tab, max);
+	integer_tab = fill_integer_tab(string_tab, integer_tab, data);
 	return (integer_tab);
 }

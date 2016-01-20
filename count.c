@@ -6,7 +6,7 @@
 /*   By: cfelbacq <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/19 15:30:16 by cfelbacq          #+#    #+#             */
-/*   Updated: 2016/01/19 15:42:53 by cfelbacq         ###   ########.fr       */
+/*   Updated: 2016/01/20 14:43:59 by cfelbacq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int		count_len_line(char *s)
 	return (i);
 }
 
-int		count_len_nb(char **string_tab, t_max *max)
+int		count_len_nb(char **string_tab, t_env *data)
 {
 	int i;
 	int j;
@@ -33,22 +33,22 @@ int		count_len_nb(char **string_tab, t_max *max)
 	i = 0;
 	while (string_tab[i] != NULL)
 	{
-		if (i >= 1 && tmp < max->x)
-			tmp = max->x;
-		max->x = 0;
+		data->max_x = 0;
 		j = 0;
 		while (string_tab[i][j] != '\0')
 		{
 			if (((string_tab[i][j] >= '0' && string_tab[i][j] <= '9')) && \
 			((string_tab[i][j + 1] == ' ' || string_tab[i][j + 1] == '\0')))
-				max->x++;
+				data->max_x++;
 			j++;
 		}
 		i++;
+		if (tmp < data->max_x)
+			tmp = data->max_x;
 	}
 	if (i > 1)
-		max->x = tmp;
-	return (max->x);
+		data->max_x = tmp;
+	return (data->max_x);
 }
 
 char**		count_line_in_file(int fd, char **string_tab, char *line)

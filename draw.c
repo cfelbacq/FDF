@@ -6,40 +6,76 @@
 /*   By: cfelbacq <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/11 15:43:14 by cfelbacq          #+#    #+#             */
-/*   Updated: 2016/01/11 15:56:15 by cfelbacq         ###   ########.fr       */
+/*   Updated: 2016/01/20 17:34:29 by cfelbacq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <mlx.h>
-#include <unistd.h>
 #include "fdf.h"
 
-static	int		Round(float x)
+void	draw_dx(t_env *data, t_pos *start, int dx, int dy)
 {
-	x = x + 0.5;
-	return ((int)x);
+	int cumul;
+	int i;
+	int xinc;
+	int yinc;
+
+	xinc = (dx > 0) ? 1 : -1;
+	yinc = (dy > 0) ? 1 : -1;
+	dx = abs(dx);
+	dy = abs(dy);
+	cumul = dx / 2;
+	i = 1;
+	while (i <= dx)
+	{
+		start->x = start->x + xinc;
+		cumul = cumul + dy;
+		if (cumul >= dx )
+		{
+			cumul = cumul - dx;
+			start->y = start->y + yinc;
+		}
+		mlx_pixel_put(data->mlx, data->win, start->x, start->y, 0xFF00FF);
+		i++;
+	}
+}
+
+void	draw_dy(t_env *data, t_pos *start, int dx, int dy)
+{
+	int cumul;
+	int i;
+	int xinc;
+	int yinc;
+
+	xinc = (dx > 0) ? 1 : -1;
+	yinc = (dy > 0) ? 1 : -1;
+	dx = abs(dx);
+	dy = abs(dy);
+	i = 1;
+	cumul = dy / 2;
+	while (i <= dy)
+	{
+		start->y = start->y + yinc;
+		cumul = cumul + dx;
+		if (cumul >= dy)
+		{
+			cumul = cumul - dy;
+			start->x = start->x + xinc;
+		}
+		mlx_pixel_put(data->mlx, data->win, start->x, start->y, 0xFF00FF);
+		i++;
+	}
 }
 
 void	draw(t_env *data, t_pos *start, t_pos *destination)
 {
-	int i;
-	int x;
-	int y;
-	float m;
 	int dx;
 	int dy;
 
-	i = 0;
-	x = 0;
-	y = 0;
-	dy = destination->y - start->y;
 	dx = destination->x - start->x;
-	m = ((float)dy / (float)dx);
-	while (i < dx)
-	{
-		i++;
-		x = start->x + i;
-		y = Round(start->y + m * i);
-		mlx_pixel_put(data->mlx, data->win, x, y, 0xFF0000);
-	}
+	dy = destination->y - start->y;
+	mlx_pixel_put(data->mlx, data->win , start->x, start->y, 0xFF0000);
+	if ( abs(dx) > abs(dy) )
+		draw_dx(data, start, dx, dy);
+	else
+		draw_dy(data, start, dx, dy);
 }
