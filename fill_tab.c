@@ -6,7 +6,7 @@
 /*   By: cfelbacq <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/19 15:28:48 by cfelbacq          #+#    #+#             */
-/*   Updated: 2016/01/20 14:34:04 by cfelbacq         ###   ########.fr       */
+/*   Updated: 2016/02/01 15:05:46 by cfelbacq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,19 +62,16 @@ int		**fill_integer_tab(char **string_tab, int **integer_tab, t_env *data)
 	return (integer_tab);
 }
 
-int		**fill_tab(int fd, char **string_tab, char *file, int **integer_tab,\
-		t_env *data)
+void	fill_string_tab(char **string_tab, int fd, char *line, char *file)
 {
 	int i;
-	char *line;
-	int ret;
 	int j;
+	int ret;
+	int k;
 
 	i = 0;
+	k = 0;
 	ret = 0;
-	line = NULL;
-	string_tab = count_line_in_file(fd, string_tab, line);
-	fd = open(file, O_RDONLY);
 	while ((ret = get_next_line(fd, &line)) > 0)
 	{
 		string_tab[i] = (char *)ft_memalloc(sizeof(char) * \
@@ -82,12 +79,26 @@ int		**fill_tab(int fd, char **string_tab, char *file, int **integer_tab,\
 		j = 0;
 		while (line[j] != '\0')
 		{
-			string_tab[i][j] = line[j];
+			if (line[j] == ' ' && line[j + 1] == ' ')
+				j++;
+			string_tab[i][k] = line[j];
+			k++;
 			j++;
 		}
-		string_tab[i][j] = '\0';
+		string_tab[i][k] = '\0';
 		i++;
 	}
+}
+
+int		**fill_tab(int fd, char **string_tab, char *file, int **integer_tab,\
+		t_env *data)
+{
+	char *line;
+
+	line = NULL;
+	string_tab = memalloc_string_tab(fd, string_tab, line);
+	fd = open(file, O_RDONLY);
+	fill_string_tab(string_tab, fd, line, file);
 	integer_tab = fill_integer_tab(string_tab, integer_tab, data);
 	return (integer_tab);
 }
