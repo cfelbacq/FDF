@@ -6,7 +6,7 @@
 /*   By: cfelbacq <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/11 15:44:08 by cfelbacq          #+#    #+#             */
-/*   Updated: 2016/01/22 16:08:39 by cfelbacq         ###   ########.fr       */
+/*   Updated: 2016/02/03 15:55:46 by cfelbacq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,15 @@ typedef struct	s_env
 	void	*win;
 	int		max_x;
 	int		max_y;
-	int		x;
-	int		y;
 	int		color;
 	int		max_int;
-	int		win_y;
-	int		win_x;
 }				t_env;
+
+typedef struct	s_win
+{
+	int		width;
+	int		height;
+}				t_win;
 
 typedef struct	s_pos
 {
@@ -46,7 +48,7 @@ void	free_double_tab(char **string_tab);
 void	free_triple_tab(char ***string);
 int		count_len_line(char *s);
 int		count_len_nb(char **string_tab, t_env *data);
-char	**count_line_in_file(int fd, char **string_tab, char *s);
+char	**memalloc_string_tab(int fd, char **string_tab, char *s);
 char	***fill_tmp_tab(char **string_tab, char ***string, t_env *data);
 int		**fill_integer_tab(char **string_tab, int **integer_tab, t_env *data);
 int		**fill_tab(int fd, char **string_tab, char *file, int **integer_tab,\

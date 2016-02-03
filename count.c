@@ -6,7 +6,7 @@
 /*   By: cfelbacq <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/19 15:30:16 by cfelbacq          #+#    #+#             */
-/*   Updated: 2016/01/20 14:43:59 by cfelbacq         ###   ########.fr       */
+/*   Updated: 2016/02/03 15:42:50 by cfelbacq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int		count_len_nb(char **string_tab, t_env *data)
 	return (data->max_x);
 }
 
-char**		count_line_in_file(int fd, char **string_tab, char *line)
+char**		memalloc_string_tab(int fd, char **string_tab, char *line)
 {
 	int i;
 	int ret;
