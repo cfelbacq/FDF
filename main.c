@@ -6,7 +6,7 @@
 /*   By: cfelbacq <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/07 12:56:47 by cfelbacq          #+#    #+#             */
-/*   Updated: 2016/02/03 15:56:20 by cfelbacq         ###   ########.fr       */
+/*   Updated: 2016/02/03 16:45:35 by cfelbacq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 int		expose_hook(t_env *data)
 {
-	t_pos start;
-	t_pos destination;
-	mlx_pixel_put(data->mlx, data->win, start.x, start.y, data->color);
+	//t_pos start;
+	//t_pos destination;
+	//mlx_pixel_put(data->mlx, data->win, start.x, start.y, data->color);
 	//draw(data, &start, &destination);
 	return (0);
 }
@@ -30,6 +30,65 @@ int		key_hook(int keycode, t_env *data)
 	return (0);
 }
 
+void	draw_x(t_env *data, int **integer_tab)
+{
+	int i;
+	int j;
+	t_pos a;
+	t_pos b;
+
+	i = 0;
+	j = 0;
+	a.y = 10;
+	b.y = a.y;
+	while (i < data->max_y)
+	{
+		a.x = 10;
+		b.x = a.x + 10;
+		j = 0;
+		while (j < data->max_x)
+		{
+			draw(data, &a, &b);
+			a.x = b.x;
+			b.x = a.x + 10;
+			j++;
+		}
+		a.y += 10;
+		b.y = a.y;
+		i++;
+	}
+}
+
+void	draw_y(t_env *data, int **integer_tab)
+{
+	int i;
+	int j;
+	t_pos a;
+	t_pos b;
+
+	i = 0;
+	j = 0;
+	a.x = 10;
+	b.x = a.x;
+	b.y = a.y + 10;
+	while (i < data->max_x)
+	{
+		a.y = 10;
+		j = 0;
+		b.y = a.y + 10;
+		while (j < data->max_y)
+		{
+			draw(data, &a, &b);
+			a.y = b.y;
+			b.y = a.y + 10;
+			j++;
+		}
+		a.x += 10;
+		b.x = a.x;
+		i++;
+	}
+	
+}
 
 void	place_point(int **integer_tab, t_env *data)
 {
@@ -60,6 +119,8 @@ void	place_point(int **integer_tab, t_env *data)
 			ft_putchar('\n');
 		i++;
 	}
+	draw_x(data, integer_tab);
+	draw_y(data, integer_tab);
 }
 
 void	find_max_int(int **integer_tab, t_env *data)
@@ -81,11 +142,6 @@ void	find_max_int(int **integer_tab, t_env *data)
 		}
 		i++;
 	}
-}
-
-void	draw_x(t_env *data)
-{
-	
 }
 
 int	main(int argc, char **argv)
@@ -119,7 +175,6 @@ int	main(int argc, char **argv)
 	data.win = mlx_new_window(data.mlx, window.height, window.width, "42");
 	find_max_int(integer_tab, &data);
 	place_point(integer_tab, &data);
-	draw_x(&data);
 	mlx_expose_hook(data.win, expose_hook, &data);
 	mlx_key_hook(data.win, key_hook, &data);
 	mlx_loop(data.mlx);
