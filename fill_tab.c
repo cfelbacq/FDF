@@ -6,7 +6,7 @@
 /*   By: cfelbacq <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/19 15:28:48 by cfelbacq          #+#    #+#             */
-/*   Updated: 2016/02/03 15:59:21 by cfelbacq         ###   ########.fr       */
+/*   Updated: 2016/02/04 16:31:20 by cfelbacq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,13 +70,13 @@ void	fill_string_tab(char **string_tab, int fd, char *line, char *file)
 	int k;
 
 	i = 0;
-	k = 0;
 	ret = 0;
 	while ((ret = get_next_line(fd, &line)) > 0)
 	{
 		string_tab[i] = (char *)ft_memalloc(sizeof(char) * \
 				count_len_line(line) + 1);
 		j = 0;
+		k = 0;
 		while (line[j] != '\0')
 		{
 			if (line[j] == ' ' && line[j + 1] == ' ')

@@ -6,7 +6,7 @@
 /*   By: cfelbacq <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/07 12:56:47 by cfelbacq          #+#    #+#             */
-/*   Updated: 2016/02/03 16:45:35 by cfelbacq         ###   ########.fr       */
+/*   Updated: 2016/02/04 17:04:01 by cfelbacq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,97 +30,57 @@ int		key_hook(int keycode, t_env *data)
 	return (0);
 }
 
-void	draw_x(t_env *data, int **integer_tab)
+void	draw_x(t_env *data, int **integer_tab, int addition_x, int addition_y)
 {
 	int i;
 	int j;
 	t_pos a;
 	t_pos b;
 
-	i = 0;
-	j = 0;
-	a.y = 10;
-	b.y = a.y;
-	while (i < data->max_y)
+	i = 1;
+	while (i < data->max_y + 1)
 	{
-		a.x = 10;
-		b.x = a.x + 10;
-		j = 0;
+		j = 1;
 		while (j < data->max_x)
 		{
-			draw(data, &a, &b);
-			a.x = b.x;
-			b.x = a.x + 10;
+			a.x = 
 			j++;
 		}
-		a.y += 10;
-		b.y = a.y;
 		i++;
 	}
 }
 
 void	draw_y(t_env *data, int **integer_tab)
 {
-	int i;
-	int j;
-	t_pos a;
-	t_pos b;
-
-	i = 0;
-	j = 0;
-	a.x = 10;
-	b.x = a.x;
-	b.y = a.y + 10;
-	while (i < data->max_x)
-	{
-		a.y = 10;
-		j = 0;
-		b.y = a.y + 10;
-		while (j < data->max_y)
-		{
-			draw(data, &a, &b);
-			a.y = b.y;
-			b.y = a.y + 10;
-			j++;
-		}
-		a.x += 10;
-		b.x = a.x;
-		i++;
-	}
 	
 }
 
-void	place_point(int **integer_tab, t_env *data)
+void	place_point(int **integer_tab, t_env *data, t_win *window)
 {
 	int i;
 	int j;
 	t_pos a;
+	int addition_x;
+	int addition_y;
 
-	a.x = 10;
-	a.y = 10;
-	i = 0;
-	j = 0;
-	while (i < data->max_y)
+	addition_x = window->width / (data->max_x + 1);
+	addition_y = window->height / (data->max_y + 1) ;
+	a.y = 0;
+	a.x = 0;
+	i = 1;
+	while (i < data->max_y + 1)
 	{
-		j = 0;
-		a.x = 10;
-		while (j < data->max_x)
+		j = 1;
+		while (j < data->max_x + 1)
 		{
-			a.x += 10;
-			mlx_pixel_put(data->mlx, data->win, a.x, a.y, 0xFF0000);
-			ft_putstr("a.x : ");
-			ft_putnbr(a.x);
-			ft_putchar('\n');
+			mlx_pixel_put(data->mlx, data->win, j * addition_x, i * addition_y, 0xff0000);
+
 			j++;
 		}
-		a.y += 10;
-			ft_putstr("a.y : ");
-			ft_putnbr(a.y);
-			ft_putchar('\n');
 		i++;
 	}
-	draw_x(data, integer_tab);
-	draw_y(data, integer_tab);
+	draw_x(data, integer_tab, addition_x, addition_y);
+//	draw_y(data, integer_tab);
 }
 
 void	find_max_int(int **integer_tab, t_env *data)
@@ -174,7 +134,7 @@ int	main(int argc, char **argv)
 	data.mlx = mlx_init();
 	data.win = mlx_new_window(data.mlx, window.height, window.width, "42");
 	find_max_int(integer_tab, &data);
-	place_point(integer_tab, &data);
+	place_point(integer_tab, &data, &window);
 	mlx_expose_hook(data.win, expose_hook, &data);
 	mlx_key_hook(data.win, key_hook, &data);
 	mlx_loop(data.mlx);
