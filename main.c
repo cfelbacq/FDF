@@ -6,7 +6,7 @@
 /*   By: cfelbacq <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/07 12:56:47 by cfelbacq          #+#    #+#             */
-/*   Updated: 2016/02/04 17:04:01 by cfelbacq         ###   ########.fr       */
+/*   Updated: 2016/02/05 14:22:37 by cfelbacq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,46 +41,56 @@ void	draw_x(t_env *data, int **integer_tab, int addition_x, int addition_y)
 	while (i < data->max_y + 1)
 	{
 		j = 1;
-		while (j < data->max_x)
+		while (j < data->max_x + 1)
 		{
-			a.x = 
+			a.x = (0.71 * (i - j)) * addition_x;
+			a.y = ((-0.41 * (i + j)) + 0.82 + integer_tab[i - 1][j - 1]) * addition_y ;
+			a.x = a.x + addition_x / 2;
+			a.y = a.y + addition_y / 4;
+			if (j > 1)
+				draw (data, &b, &a);
+			b = a;
 			j++;
 		}
 		i++;
 	}
 }
 
-void	draw_y(t_env *data, int **integer_tab)
-{
-	
-}
-
-void	place_point(int **integer_tab, t_env *data, t_win *window)
+void	draw_y(t_env *data, int **integer_tab, int addition_x, int addition_y)
 {
 	int i;
 	int j;
 	t_pos a;
-	int addition_x;
-	int addition_y;
+	t_pos b;
 
-	addition_x = window->width / (data->max_x + 1);
-	addition_y = window->height / (data->max_y + 1) ;
-	a.y = 0;
-	a.x = 0;
 	i = 1;
-	while (i < data->max_y + 1)
+	while (i < data->max_x + 1)
 	{
 		j = 1;
-		while (j < data->max_x + 1)
+		while (j < data->max_y + 1)
 		{
-			mlx_pixel_put(data->mlx, data->win, j * addition_x, i * addition_y, 0xff0000);
-
+			a.x = (0.71 * (i - j)) * addition_x;
+			a.y = ((-0.41 * (i + j)) + 0.82 + integer_tab[j - 1][i - 1]) * addition_y;
+			a.x = a.x + addition_x / 2;
+			a.y = a.y + addition_y / 4;
+			if (j > 1)
+				draw (data, &b, &a);
+			b = a;
 			j++;
 		}
 		i++;
 	}
+}
+
+void	place_point(int **integer_tab, t_env *data, t_win *window)
+{
+	int addition_x;
+	int addition_y;
+
+	addition_x = (window->width - 100) / (data->max_x + 1);
+	addition_y = (window->height - 100) / (data->max_y + 1) ;
 	draw_x(data, integer_tab, addition_x, addition_y);
-//	draw_y(data, integer_tab);
+	draw_y(data, integer_tab, addition_x, addition_y);
 }
 
 void	find_max_int(int **integer_tab, t_env *data)
