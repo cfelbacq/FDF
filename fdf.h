@@ -6,7 +6,7 @@
 /*   By: cfelbacq <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/11 15:44:08 by cfelbacq          #+#    #+#             */
-/*   Updated: 2016/02/03 15:55:46 by cfelbacq         ###   ########.fr       */
+/*   Updated: 2016/02/06 15:39:50 by cfelbacq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,9 @@ typedef struct	s_env
 	int		max_y;
 	int		color;
 	int		max_int;
+	int		**integer_tab_s;
+	int		win_width;
+	int		win_height;
 }				t_env;
 
 typedef struct	s_win
