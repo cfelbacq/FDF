@@ -6,7 +6,7 @@
 /*   By: cfelbacq <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/07 12:56:47 by cfelbacq          #+#    #+#             */
-/*   Updated: 2016/02/06 15:41:18 by cfelbacq         ###   ########.fr       */
+/*   Updated: 2016/02/07 17:06:26 by cfelbacq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,9 @@ int		key_hook(int keycode, t_env *data)
 	return (0);
 }
 
-void	draw_x(t_env *data, int **integer_tab, int addition_x, int addition_y)
+
+void	draw_x(t_env *data, int **integer_tab, int addition_x, int addition_y,\
+		t_win *window)
 {
 	int i;
 	int j;
@@ -52,9 +54,11 @@ void	draw_x(t_env *data, int **integer_tab, int addition_x, int addition_y)
 		while (j < data->max_x + 1)
 		{
 			a.x = ((M_SQRT2 / 2) * (j - i)) * addition_x;
-			a.y = -(((-0.60) * (j + i)) + 0.50 + integer_tab[i - 1][j - 1]) * addition_y;
-			a.x += (1200 / 2);
-			a.y += (1200 / 4) - 200;
+			a.y = -(((-0.37) * (j + i)) + 0.60 + integer_tab[i - 1][j - 1]) * addition_y;
+			a.x *= 0.5;
+			a.y *= 0.5;
+			a.x += 500;
+			a.y += 500;
 			ft_putstr("draw_x a.x : ");
 			ft_putnbr(a.x);
 			ft_putchar('\n');
@@ -70,7 +74,8 @@ void	draw_x(t_env *data, int **integer_tab, int addition_x, int addition_y)
 	}
 }
 
-void	draw_y(t_env *data, int **integer_tab, int addition_x, int addition_y)
+void	draw_y(t_env *data, int **integer_tab, int addition_x, int addition_y,\
+		t_win *window)
 {
 	int i;
 	int j;
@@ -84,9 +89,11 @@ void	draw_y(t_env *data, int **integer_tab, int addition_x, int addition_y)
 		while (j < data->max_y + 1)
 		{
 			a.x = ((M_SQRT2 / 2) * (i - j)) * addition_x;
-			a.y = -(((-0.60) * (i + j)) + 0.50 + integer_tab[j - 1][i - 1]) * addition_y;
-			a.x += (1200 / 2);
-			a.y += (1200 / 4) - 200;
+			a.y = -(((-0.37) * (i + j)) + 0.60 + integer_tab[j - 1][i - 1]) * addition_y;
+			a.x *= 0.5;
+			a.y *= 0.5;
+			a.x += 500;
+			a.y += 500;
 			ft_putstr("draw_y a.x : ");
 			ft_putnbr(a.x);
 			ft_putchar('\n');
@@ -107,17 +114,18 @@ void	place_point(int **integer_tab, t_env *data, t_win *window)
 	int addition_x;
 	int addition_y;
 
-	addition_x = (window->width) / (data->max_x + 1);
-	addition_y = (window->height) / (data->max_y + 1) ;
-	draw_x(data, integer_tab, addition_x, addition_y);
-	draw_y(data, integer_tab, addition_x, addition_y);
+	data->color = 0xffffff;
+	addition_x = (window->width - 100) / (data->max_x + 1);
+	addition_y = (window->height - 100) / (data->max_y + 1) ;
+	draw_x(data, integer_tab, addition_x, addition_y, window);
+	draw_y(data, integer_tab, addition_x, addition_y, window);
 }
 
 void	find_max_int(int **integer_tab, t_env *data)
 {
 	int i;
 	int j;
-	
+
 	data->max_int = 0;
 	i = 0;
 	j = 0;

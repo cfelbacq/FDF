@@ -6,7 +6,7 @@
 /*   By: cfelbacq <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/11 15:43:14 by cfelbacq          #+#    #+#             */
-/*   Updated: 2016/02/06 15:22:44 by cfelbacq         ###   ########.fr       */
+/*   Updated: 2016/02/07 17:06:20 by cfelbacq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	draw_dx(t_env *data, t_pos *start, int dx, int dy)
 			cumul = cumul - dx;
 			start->y = start->y + yinc;
 		}
-		mlx_pixel_put(data->mlx, data->win, start->x, start->y, 0x8f8f8f);
+		mlx_pixel_put(data->mlx, data->win, start->x, start->y, data->color);
 		i++;
 	}
 }
@@ -61,7 +61,7 @@ void	draw_dy(t_env *data, t_pos *start, int dx, int dy)
 			cumul = cumul - dy;
 			start->x = start->x + xinc;
 		}
-		mlx_pixel_put(data->mlx, data->win, start->x, start->y, 0x8f8f8f);
+		mlx_pixel_put(data->mlx, data->win, start->x, start->y, data->color);
 		i++;
 	}
 }
@@ -73,7 +73,7 @@ void	draw(t_env *data, t_pos *start, t_pos *destination)
 
 	dx = destination->x - start->x;
 	dy = destination->y - start->y;
-	mlx_pixel_put(data->mlx, data->win , start->x, start->y, 0x8f8f8f);
+	mlx_pixel_put(data->mlx, data->win , start->x, start->y, data->color);
 	if ( abs(dx) > abs(dy) )
 		draw_dx(data, start, dx, dy);
 	else
