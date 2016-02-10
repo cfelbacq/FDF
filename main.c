@@ -6,25 +6,21 @@
 /*   By: cfelbacq <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/07 12:56:47 by cfelbacq          #+#    #+#             */
-/*   Updated: 2016/02/09 17:08:40 by cfelbacq         ###   ########.fr       */
+/*   Updated: 2016/02/10 16:10:24 by cfelbacq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 #include <math.h>
 
-void	place_point(int **integer_tab, t_env *data, t_win *window);
+
+void	draw_iso(int **int_tab, t_env *data);
 void	free_draw(t_env *data);
 
 int		expose_hook(t_env *data)
 {
-	t_win window;
-
-	window.width = data->win_width;
-	window.height = data->win_height;
-
 	free_draw(data);
-	place_point(data->integer_tab_s, data, &window);
+	draw_iso(data->integer_tab_s, data);
 	return (0);
 }
 
@@ -50,22 +46,56 @@ int		key_hook(int keycode, t_env *data)
 {
 	if (keycode == 53)
 		exit(0);
+	if (keycode == 69)
+	{
+		free_draw(data);
+			data->zoom += 0.2;
+		draw_iso(data->integer_tab_s, data);
+	}
+	if (keycode == 78)
+	{
+		free_draw(data);
+		if (data->zoom > 0)
+		data->zoom -= 0.2;
+		draw_iso(data->integer_tab_s, data);
+	}
 	return (0);
 }
 
-t_pos	threed(int i, int j, t_pos a, int z, t_pos *add)
+void	pythagore(t_env *data, t_pos *add)
 {
-	a.x = ((M_SQRT2 / 2) * (j - i)) * add->x;
-	a.y = -(((-0.60) * (j + i)) + 0.82 + z)\
-		   * add->y;
-	a.x *= 0.5;
-	a.y *= 0.5;
-	a.x += ;
-	a.y += ;
+	int diag;
+
+	add->x = (data->win_width - 100) / (data->max_x + 1);
+	add->y = (data->win_height - 100) / (data->max_y + 1);
+	diag = sqrt(pow(data->max_x * add->x, 2) + pow(data->max_y * add->y, 2));
+	while (diag > data->win_width)
+	{
+		data->zoom -= 0.2;
+		diag /= 2;
+	}
+}
+
+t_pos	three_d(int i, int j, int z, t_env *data, t_pos *add)
+{
+	t_pos a;
+	t_pos center;
+	
+	data->color = 0xffffff;
+	add.x = (data->win_width - 100) / (data->max_x + 1);
+	add.y = (data->win_height - 100) / (data->max_y + 1);
+	center.x = data->win_width / 2;
+	center.y = data-> win_height / 4*;
+	a.x = ((0.72) * (j - i)) * add.x;
+	a.y = -(((-0.40) * (j + i)) + 0.82 + z) * add.y;
+	a.x *= data->zoom;
+	a.y *= data->zoom;
+	a.x += center.x;
+	a.y += center.y;
 	return (a);
 }
 
-void	draw_x(t_env *data, int **integer_tab, t_pos *add, t_win *window)
+void	draw_iso(int **int_tab, t_env *data, t_pos *add)
 {
 	t_pos i;
 	t_pos a;
@@ -77,31 +107,21 @@ void	draw_x(t_env *data, int **integer_tab, t_pos *add, t_win *window)
 		i.x = 1;
 		while (i.x < data->max_x + 1)
 		{
-			a = threed(i.y, i.x, a, integer_tab[i.y - 1][i.x - 1], add);
+			a = three_d(i.y, i.x, int_tab[i.y - 1][i.x - 1], data, add);
 			if (i.x > 1)
 			{
-				b = threed(i.y, i.x - 1, a, integer_tab[i.y - 1][i.x - 2], add);
+				b = three_d(i.y, i.x - 1, int_tab[i.y - 1][i.x - 2], data, add);
 				draw (data, &b, &a);
 			}
 			if (i.y > 1)
 			{
-				b = threed(i.y - 1, i.x, a, integer_tab[i.y - 2][i.x - 1], add);
+				b = three_d(i.y - 1, i.x, int_tab[i.y - 2][i.x - 1], data, add);
 				draw(data, &b, &a);
 			}
 			i.x++;
 		}
 		i.y++;
 	}
-}
-
-void	place_point(int **integer_tab, t_env *data, t_win *window)
-{
-	t_pos add;
-
-	data->color = 0xffffff;
-	add.x = (window->width - 100) / (data->max_x + 1);
-	add.y = (window->height - 100) / (data->max_y + 1) ;
-	draw_x(data, integer_tab, &add, window);
 }
 
 void	find_max_int(int **integer_tab, t_env *data)
@@ -129,19 +149,15 @@ int	main(int argc, char **argv)
 {
 	char **string_tab;
 	int fd;
-	int i;
-	int j;
 	int	**integer_tab;
 	t_env data;
-	t_win window;
+	t_pos add;
 
 	data.max_y = 0;
 	data.max_x = 0;
-	window.width = 1200;
-	window.height = 1200;
+	data.win_width = 1200;
+	data.win_height = 1200;
 	string_tab = NULL;
-	i = 0;
-	j = 0;
 	fd = open(argv[1], O_RDONLY);
 	integer_tab = NULL;
 	if (argc == 2)
@@ -153,12 +169,12 @@ int	main(int argc, char **argv)
 	ft_putnbr(data.max_x);
 	ft_putchar('\n');
 	data.mlx = mlx_init();
-	data.win = mlx_new_window(data.mlx, window.height, window.width, "42");
+	data.win = mlx_new_window(data.mlx, data.win_height, data.win_width, "42");
 	find_max_int(integer_tab, &data);
-	place_point(integer_tab, &data, &window);
-	data.win_width = window.width;
-	data.win_height = window.height;
 	data.integer_tab_s = integer_tab;
+	data.zoom = 1;
+	pythagore(&data, &add);
+	draw_iso(data.integer_tab_s, &data, &add);
 	mlx_expose_hook(data.win, expose_hook, &data);
 	mlx_key_hook(data.win, key_hook, &data);
 	mlx_loop(data.mlx);
