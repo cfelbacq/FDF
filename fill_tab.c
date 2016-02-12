@@ -6,7 +6,7 @@
 /*   By: cfelbacq <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/19 15:28:48 by cfelbacq          #+#    #+#             */
-/*   Updated: 2016/02/04 16:31:20 by cfelbacq         ###   ########.fr       */
+/*   Updated: 2016/02/12 14:16:59 by cfelbacq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,11 @@ char	***fill_tmp_tab(char **string_tab, char ***string, t_env *data)
 
 int		**fill_integer_tab(char **string_tab, int **integer_tab, t_env *data)
 {
-	int i;
-	char ***string;
-	int j;
-	int len_of_line;
-	
+	int		i;
+	char	***string;
+	int		j;
+	int		len_of_line;
+
 	len_of_line = count_len_nb(string_tab, data);
 	i = 0;
 	j = 0;
@@ -79,7 +79,8 @@ void	fill_string_tab(char **string_tab, int fd, char *line, char *file)
 		k = 0;
 		while (line[j] != '\0')
 		{
-			if (line[j] == ' ' && line[j + 1] == ' ')
+			while ((line[j] == ' ' || line[j] == '\t') && (line[j + 1] == ' '\
+					|| line[j + 1] == '\t'))
 				j++;
 			string_tab[i][k] = line[j];
 			k++;
@@ -90,13 +91,16 @@ void	fill_string_tab(char **string_tab, int fd, char *line, char *file)
 	}
 }
 
-int		**fill_tab(int fd, char **string_tab, char *file, int **integer_tab,\
+int		**fill_tab(int fd, char *file, int **integer_tab,\
 		t_env *data)
 {
+	char **string_tab;
 	char *line;
 
 	line = NULL;
+	string_tab = NULL;
 	string_tab = memalloc_string_tab(fd, string_tab, line);
+	close(fd);
 	fd = open(file, O_RDONLY);
 	fill_string_tab(string_tab, fd, line, file);
 	integer_tab = fill_integer_tab(string_tab, integer_tab, data);

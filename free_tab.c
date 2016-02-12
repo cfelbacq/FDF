@@ -6,7 +6,7 @@
 /*   By: cfelbacq <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/19 15:30:38 by cfelbacq          #+#    #+#             */
-/*   Updated: 2016/01/19 15:31:19 by cfelbacq         ###   ########.fr       */
+/*   Updated: 2016/02/12 14:12:22 by cfelbacq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	free_double_tab(char **string_tab)
 	while (string_tab[i] != NULL)
 	{
 		ft_strdel(&string_tab[i]);
-			i++;
+		i++;
 	}
 	free(string_tab);
 }

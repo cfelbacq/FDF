@@ -6,7 +6,7 @@
 /*   By: cfelbacq <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/11 15:43:14 by cfelbacq          #+#    #+#             */
-/*   Updated: 2016/02/09 17:02:08 by cfelbacq         ###   ########.fr       */
+/*   Updated: 2016/02/12 14:13:24 by cfelbacq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	draw_dx(t_env *data, t_pos *start, int dx, int dy)
 	{
 		start->x = start->x + xinc;
 		cumul = cumul + dy;
-		if (cumul >= dx )
+		if (cumul >= dx)
 		{
 			cumul = cumul - dx;
 			start->y = start->y + yinc;
@@ -73,8 +73,8 @@ void	draw(t_env *data, t_pos *start, t_pos *destination)
 
 	dx = destination->x - start->x;
 	dy = destination->y - start->y;
-	mlx_pixel_put(data->mlx, data->win , start->x, start->y, data->color);
-	if ( abs(dx) > abs(dy) )
+	mlx_pixel_put(data->mlx, data->win, start->x, start->y, data->color);
+	if (abs(dx) > abs(dy))
 		draw_dx(data, start, dx, dy);
 	else
 		draw_dy(data, start, dx, dy);

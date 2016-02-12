@@ -6,7 +6,7 @@
 #    By: cfelbacq <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/01/11 15:46:16 by cfelbacq          #+#    #+#              #
-#    Updated: 2016/01/20 15:38:52 by cfelbacq         ###   ########.fr        #
+#    Updated: 2016/02/12 14:25:06 by cfelbacq         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,14 +16,15 @@ SOURCE =	main.c \
 			draw.c \
 			count.c \
 			fill_tab.c \
-			free_tab.c 
+			free_tab.c \
+			iso.c
 
 OBJ =		main.o \
 			draw.o \
 			count.o \
 			fill_tab.o \
-			free_tab.o
-
+			free_tab.o \
+			iso.o
 all : $(NAME)
 
 $(NAME) :
