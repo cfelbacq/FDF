@@ -6,7 +6,7 @@
 /*   By: cfelbacq <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/11 15:44:08 by cfelbacq          #+#    #+#             */
-/*   Updated: 2016/02/12 14:24:09 by cfelbacq         ###   ########.fr       */
+/*   Updated: 2016/02/13 14:49:08 by cfelbacq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ typedef struct	s_env
 	int		win_width;
 	int		win_height;
 	float	zoom;
+	int		up_down;
+	int		left_right;
 }				t_env;
 
 typedef struct	s_win

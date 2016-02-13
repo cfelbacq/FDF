@@ -6,13 +6,12 @@
 /*   By: cfelbacq <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/12 14:18:23 by cfelbacq          #+#    #+#             */
-/*   Updated: 2016/02/12 14:35:25 by cfelbacq         ###   ########.fr       */
+/*   Updated: 2016/02/13 14:51:29 by cfelbacq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 #include <math.h>
-#include <stdio.h>
 
 void	free_draw(t_env *data)
 {
@@ -50,18 +49,15 @@ t_pos	three_d(int i, int j, int z, t_env *data)
 {
 	t_pos a;
 	t_pos center;
-	t_pos add;
+
 	data->color = 0x00ff00;
-	add.x = (data->win_width - 100) / (data->max_x + 1);
-	add.y = (data->win_height - 100) / (data->max_y + 1);
 	center.x = data->win_width / 2;
 	center.y = data-> win_height / 2.5;
-	a.x = ((0.71) * (j - i)) * add.x;
-	a.y = -(((-0.41) * (j + i)) + 0.82 + z) * add.y;
-	a.x *= data->zoom;
-	a.y *= data->zoom;
-	a.x += center.x;
-	a.y += center.y;
+	a.x = ((0.71) * (j - i)) * ((data->win_width - 100) / (data->max_x + 1));
+	a.y = -(((-0.41) * (j + i)) + 0.82 + z) * \
+		((data->win_height - 100) / (data->max_y + 1));
+	a.x = a.x * data->zoom + center.x + data->left_right;
+	a.y = a.y * data->zoom +center.y + data->up_down;
 	return (a);
 }
 
