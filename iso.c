@@ -6,7 +6,7 @@
 /*   By: cfelbacq <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/12 14:18:23 by cfelbacq          #+#    #+#             */
-/*   Updated: 2016/02/13 14:51:29 by cfelbacq         ###   ########.fr       */
+/*   Updated: 2016/02/13 15:15:16 by cfelbacq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,8 @@ t_pos	three_d(int i, int j, int z, t_env *data)
 	t_pos a;
 	t_pos center;
 
-	data->color = 0x00ff00;
 	center.x = data->win_width / 2;
-	center.y = data-> win_height / 2.5;
+	center.y = data->win_height / 2.5;
 	a.x = ((0.71) * (j - i)) * ((data->win_width - 100) / (data->max_x + 1));
 	a.y = -(((-0.41) * (j + i)) + 0.82 + z) * \
 		((data->win_height - 100) / (data->max_y + 1));

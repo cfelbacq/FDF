@@ -6,13 +6,12 @@
 /*   By: cfelbacq <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/12 14:17:32 by cfelbacq          #+#    #+#             */
-/*   Updated: 2016/02/13 15:01:43 by cfelbacq         ###   ########.fr       */
+/*   Updated: 2016/02/13 15:11:06 by cfelbacq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 #include <math.h>
-#include <stdio.h>
 
 int		expose_hook(t_env *data)
 {
@@ -49,6 +48,7 @@ int	main(int argc, char **argv)
 	t_env data;
 	t_pos add;
 
+	data.color = 0xffffff;
 	data.win_width = 1200;
 	data.win_height = 1200;
 	data.left_right = 0;
