@@ -6,13 +6,13 @@
 /*   By: cfelbacq <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/11 15:43:14 by cfelbacq          #+#    #+#             */
-/*   Updated: 2016/02/12 14:13:24 by cfelbacq         ###   ########.fr       */
+/*   Updated: 2016/02/16 16:13:28 by cfelbacq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	draw_dx(t_env *data, t_pos *start, int dx, int dy)
+static	void	draw_dx(t_env *data, t_pos *start, int dx, int dy)
 {
 	int cumul;
 	int i;
@@ -39,7 +39,7 @@ void	draw_dx(t_env *data, t_pos *start, int dx, int dy)
 	}
 }
 
-void	draw_dy(t_env *data, t_pos *start, int dx, int dy)
+static	void	draw_dy(t_env *data, t_pos *start, int dx, int dy)
 {
 	int cumul;
 	int i;
@@ -66,7 +66,7 @@ void	draw_dy(t_env *data, t_pos *start, int dx, int dy)
 	}
 }
 
-void	draw(t_env *data, t_pos *start, t_pos *destination)
+void			draw(t_env *data, t_pos *start, t_pos *destination)
 {
 	int dx;
 	int dy;

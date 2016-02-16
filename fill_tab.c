@@ -6,13 +6,13 @@
 /*   By: cfelbacq <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/19 15:28:48 by cfelbacq          #+#    #+#             */
-/*   Updated: 2016/02/16 12:02:48 by cfelbacq         ###   ########.fr       */
+/*   Updated: 2016/02/16 16:13:12 by cfelbacq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-char	***fill_tmp_tab(char **string_tab, char ***string, t_env *data)
+static	char	***fill_tmp_tab(char **string_tab, char ***string, t_env *data)
 {
 	int i;
 	int j;
@@ -33,7 +33,8 @@ char	***fill_tmp_tab(char **string_tab, char ***string, t_env *data)
 	return (string);
 }
 
-int		**fill_integer_tab(char **string_tab, int **integer_tab, t_env *data)
+static	int		**fill_integer_tab(char **string_tab, int **integer_tab,\
+		t_env *data)
 {
 	int		i;
 	char	***string;
@@ -62,7 +63,7 @@ int		**fill_integer_tab(char **string_tab, int **integer_tab, t_env *data)
 	return (integer_tab);
 }
 
-void	fill_string_tab(char **string_tab, int fd, char *line)
+static	void	fill_string_tab(char **string_tab, int fd, char *line)
 {
 	int i;
 	int j;
@@ -79,8 +80,7 @@ void	fill_string_tab(char **string_tab, int fd, char *line)
 		k = 0;
 		while (line[j] != '\0')
 		{
-			while ((line[j] == ' ' || line[j] == '\t') && (line[j + 1] == ' '\
-					|| line[j + 1] == '\t'))
+			while ((line[j] == ' ') && (line[j + 1] == ' '))
 				j++;
 			string_tab[i][k] = line[j];
 			k++;
@@ -91,18 +91,19 @@ void	fill_string_tab(char **string_tab, int fd, char *line)
 	}
 }
 
-int		**fill_tab(char *file, int **integer_tab,\
-		t_env *data)
+int				**fill_tab(char *file, int **integer_tab, t_env *data)
 {
-	char **string_tab;
-	char *line;
-	int fd;
+	char	**string_tab;
+	char	*line;
+	int		fd;
 
 	line = NULL;
 	string_tab = NULL;
 	string_tab = memalloc_string_tab(string_tab, line, file);
 	fd = open(file, O_RDONLY);
 	fill_string_tab(string_tab, fd, line);
+	if (string_tab == NULL)
+		return (0);
 	integer_tab = fill_integer_tab(string_tab, integer_tab, data);
 	return (integer_tab);
 }

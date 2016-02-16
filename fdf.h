@@ -6,7 +6,7 @@
 /*   By: cfelbacq <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/11 15:44:08 by cfelbacq          #+#    #+#             */
-/*   Updated: 2016/02/16 12:05:56 by cfelbacq         ###   ########.fr       */
+/*   Updated: 2016/02/16 16:09:36 by cfelbacq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 
 # include <unistd.h>
 # include <mlx.h>
-# include "../libft/libft.h"
-# include "../get_next_line/get_next_line.h"
+# include "libft/libft.h"
+# include "get_next_line/get_next_line.h"
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <fcntl.h>
@@ -52,18 +52,14 @@ typedef struct	s_pos
 void			draw(t_env *data, t_pos *start, t_pos *destination);
 void			free_double_tab(char **string_tab);
 void			free_triple_tab(char ***string);
+void			free_int_doubletab(t_env *data, int **int_tab);
 int				count_len_line(char *s);
 int				count_len_nb(char **string_tab, t_env *data);
 char			**memalloc_string_tab(char **string_tab, char *s, char *file);
-char			***fill_tmp_tab(char **string_tab, char ***string, t_env *data);
-int				**fill_integer_tab(char **string_tab, int **integer_tab,\
-		t_env *data);
 int				**fill_tab(char *file, int **integer_tab,\
 				t_env *data);
 void			draw_iso(int **int_tab, t_env *data);
 void			free_draw(t_env *data);
 void			find_max_int(int **integer_tab, t_env *data);
-void			pythagore(t_env *data, t_pos *add);
-int				expose_hook(t_env *data);
-int				key_hook(int keycode, t_env *data);
+void			pythagore(t_env *data);
 #endif

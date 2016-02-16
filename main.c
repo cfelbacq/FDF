@@ -6,23 +6,25 @@
 /*   By: cfelbacq <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/12 14:17:32 by cfelbacq          #+#    #+#             */
-/*   Updated: 2016/02/16 12:05:59 by cfelbacq         ###   ########.fr       */
+/*   Updated: 2016/02/16 16:14:30 by cfelbacq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-#include <math.h>
 
-int		expose_hook(t_env *data)
+static	int		expose_hook(t_env *data)
 {
 	draw_iso(data->integer_tab_s, data);
 	return (0);
 }
 
-int		key_hook(int keycode, t_env *data)
+static	int		key_hook(int keycode, t_env *data)
 {
 	if (keycode == 53)
+	{
+		free_int_doubletab(data, data->integer_tab_s);
 		exit(0);
+	}
 	if (keycode == 69)
 		data->zoom += 0.2;
 	if (keycode == 78)
@@ -41,33 +43,44 @@ int		key_hook(int keycode, t_env *data)
 	return (0);
 }
 
-int	main(int argc, char **argv)
+static	void	init(int **integer_tab, t_env *data)
 {
-	int	**integer_tab;
-	t_env data;
-	t_pos add;
+	data->color = 0xffffff;
+	data->win_width = 1200;
+	data->win_height = 1200;
+	data->left_right = 0;
+	data->up_down = 0;
+	data->mlx = mlx_init();
+	data->win = mlx_new_window(data->mlx, data->win_height,\
+			data->win_width, "42_FDF");
+	find_max_int(integer_tab, data);
+	data->integer_tab_s = integer_tab;
+	data->zoom = 1;
+}
 
-	data.color = 0xffffff;
-	data.win_width = 1200;
-	data.win_height = 1200;
-	data.left_right = 0;
-	data.up_down = 0;
+int				main(int argc, char **argv)
+{
+	int		**integer_tab;
+	t_env	data;
+
 	integer_tab = NULL;
 	if (argc == 2)
 	{
-		integer_tab = fill_tab(argv[1], integer_tab, &data);
-		data.mlx = mlx_init();
-		data.win = mlx_new_window(data.mlx, data.win_height, data.win_width, "42");
-		find_max_int(integer_tab, &data);
-		data.integer_tab_s = integer_tab;
-		data.zoom = 1;
-		pythagore(&data, &add);
+		if ((integer_tab = fill_tab(argv[1], integer_tab, &data)) == 0)
+		{
+			ft_putendl("error");
+			free_int_doubletab(&data, integer_tab);
+			exit(0);
+			return (0);
+		}
+		init(integer_tab, &data);
+		pythagore(&data);
 		draw_iso(data.integer_tab_s, &data);
 		mlx_expose_hook(data.win, expose_hook, &data);
 		mlx_key_hook(data.win, key_hook, &data);
 		mlx_loop(data.mlx);
 	}
 	else
-		ft_putstr("error");
+		ft_putendl("error");
 	return (0);
 }
