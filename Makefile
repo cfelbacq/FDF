@@ -6,7 +6,7 @@
 #    By: cfelbacq <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/01/11 15:46:16 by cfelbacq          #+#    #+#              #
-#    Updated: 2016/02/13 15:27:49 by cfelbacq         ###   ########.fr        #
+#    Updated: 2016/02/16 11:57:37 by cfelbacq         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,20 +17,28 @@ SOURCE =	main.c \
 			count.c \
 			fill_tab.c \
 			free_tab.c \
-			iso.c
+			iso.c \
+			get_next_line/get_next_line.c
 
 OBJ =		main.o \
 			draw.o \
 			count.o \
 			fill_tab.o \
 			free_tab.o \
-			iso.o
+			iso.o \
+			get_next_line.o
+
+LIB = libft/libft.a
+
+MLX = -L/usr/local/lib/ -I/usr/local/include -lmlx \
+	  -framework OpenGl -framework Appkit
+
 all : $(NAME)
 
 $(NAME) :
-	gcc -c  $(SOURCE)
-	gcc -o $(NAME) $(OBJ) get_next_line.o ../libft/libft.a -L/usr/local/lib/ -I/usr/local/include -lmlx \
-		-framework OpenGl -framework Appkit
+	make re -C libft
+	gcc -c -Wall -Werror -Wextra  $(SOURCE)
+	gcc -g -o  $(NAME) $(OBJ) $(LIB) $(MLX)
 
 clean :
 	rm -rf $(OBJ)

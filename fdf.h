@@ -6,7 +6,7 @@
 /*   By: cfelbacq <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/11 15:44:08 by cfelbacq          #+#    #+#             */
-/*   Updated: 2016/02/13 14:49:08 by cfelbacq         ###   ########.fr       */
+/*   Updated: 2016/02/16 12:05:56 by cfelbacq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,11 @@ void			free_double_tab(char **string_tab);
 void			free_triple_tab(char ***string);
 int				count_len_line(char *s);
 int				count_len_nb(char **string_tab, t_env *data);
-char			**memalloc_string_tab(int fd, char **string_tab, char *s);
+char			**memalloc_string_tab(char **string_tab, char *s, char *file);
 char			***fill_tmp_tab(char **string_tab, char ***string, t_env *data);
 int				**fill_integer_tab(char **string_tab, int **integer_tab,\
 		t_env *data);
-int				**fill_tab(int fd, char *file, int **integer_tab,\
+int				**fill_tab(char *file, int **integer_tab,\
 				t_env *data);
 void			draw_iso(int **int_tab, t_env *data);
 void			free_draw(t_env *data);

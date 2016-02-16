@@ -6,7 +6,7 @@
 /*   By: cfelbacq <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/19 15:28:48 by cfelbacq          #+#    #+#             */
-/*   Updated: 2016/02/13 14:23:45 by cfelbacq         ###   ########.fr       */
+/*   Updated: 2016/02/16 12:02:48 by cfelbacq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int		**fill_integer_tab(char **string_tab, int **integer_tab, t_env *data)
 	return (integer_tab);
 }
 
-void	fill_string_tab(char **string_tab, int fd, char *line, char *file)
+void	fill_string_tab(char **string_tab, int fd, char *line)
 {
 	int i;
 	int j;
@@ -91,18 +91,18 @@ void	fill_string_tab(char **string_tab, int fd, char *line, char *file)
 	}
 }
 
-int		**fill_tab(int fd, char *file, int **integer_tab,\
+int		**fill_tab(char *file, int **integer_tab,\
 		t_env *data)
 {
 	char **string_tab;
 	char *line;
+	int fd;
 
 	line = NULL;
 	string_tab = NULL;
-	string_tab = memalloc_string_tab(fd, string_tab, line);
-	close(fd);
+	string_tab = memalloc_string_tab(string_tab, line, file);
 	fd = open(file, O_RDONLY);
-	fill_string_tab(string_tab, fd, line, file);
+	fill_string_tab(string_tab, fd, line);
 	integer_tab = fill_integer_tab(string_tab, integer_tab, data);
 	return (integer_tab);
 }
