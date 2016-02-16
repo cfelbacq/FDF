@@ -6,7 +6,7 @@
 /*   By: cfelbacq <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/12 14:17:32 by cfelbacq          #+#    #+#             */
-/*   Updated: 2016/02/16 16:14:30 by cfelbacq         ###   ########.fr       */
+/*   Updated: 2016/02/16 16:31:25 by cfelbacq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@ int				main(int argc, char **argv)
 		{
 			ft_putendl("error");
 			free_int_doubletab(&data, integer_tab);
-			exit(0);
 			return (0);
 		}
 		init(integer_tab, &data);

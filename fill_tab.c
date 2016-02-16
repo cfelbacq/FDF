@@ -6,7 +6,7 @@
 /*   By: cfelbacq <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/19 15:28:48 by cfelbacq          #+#    #+#             */
-/*   Updated: 2016/02/16 16:13:12 by cfelbacq         ###   ########.fr       */
+/*   Updated: 2016/02/16 16:43:24 by cfelbacq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,8 +102,6 @@ int				**fill_tab(char *file, int **integer_tab, t_env *data)
 	string_tab = memalloc_string_tab(string_tab, line, file);
 	fd = open(file, O_RDONLY);
 	fill_string_tab(string_tab, fd, line);
-	if (string_tab == NULL)
-		return (0);
 	integer_tab = fill_integer_tab(string_tab, integer_tab, data);
 	return (integer_tab);
 }
