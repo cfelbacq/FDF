@@ -6,7 +6,7 @@
 /*   By: cfelbacq <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/19 15:30:38 by cfelbacq          #+#    #+#             */
-/*   Updated: 2016/02/16 16:09:58 by cfelbacq         ###   ########.fr       */
+/*   Updated: 2016/02/17 14:36:18 by cfelbacq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,14 @@ char	**memalloc_string_tab(char **string_tab, char *line, char *file)
 	ret = 0;
 	i = 0;
 	fd = open(file, O_RDONLY);
+	if (fd == -1)
+		return (NULL);
 	while ((ret = get_next_line(fd, &line)) > 0)
 		i++;
 	string_tab = (char **)ft_memalloc(sizeof(char *) * i + 1);
 	string_tab[i] = NULL;
 	line = NULL;
+	close(fd);
 	return (string_tab);
 }
 

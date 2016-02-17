@@ -6,7 +6,7 @@
 #    By: cfelbacq <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/01/11 15:46:16 by cfelbacq          #+#    #+#              #
-#    Updated: 2016/02/16 12:15:41 by cfelbacq         ###   ########.fr        #
+#    Updated: 2016/02/17 14:36:02 by cfelbacq         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,8 @@ SOURCE =	main.c \
 			fill_tab.c \
 			free_tab.c \
 			iso.c \
-			get_next_line/get_next_line.c
+			get_next_line/get_next_line.c \
+			check.c
 
 OBJ =		main.o \
 			draw.o \
@@ -26,7 +27,8 @@ OBJ =		main.o \
 			fill_tab.o \
 			free_tab.o \
 			iso.o \
-			get_next_line.o
+			get_next_line.o \
+			check.o
 
 LIB = libft/libft.a
 
@@ -43,7 +45,9 @@ $(NAME) :
 clean :
 	rm -rf $(OBJ)
 	make clean -C libft
+
 fclean : clean
 	rm -rf $(NAME)
 	make fclean -C libft
+
 re : fclean all

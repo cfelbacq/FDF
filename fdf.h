@@ -6,7 +6,7 @@
 /*   By: cfelbacq <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/11 15:44:08 by cfelbacq          #+#    #+#             */
-/*   Updated: 2016/02/16 16:09:36 by cfelbacq         ###   ########.fr       */
+/*   Updated: 2016/02/17 14:35:38 by cfelbacq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,4 +62,5 @@ void			draw_iso(int **int_tab, t_env *data);
 void			free_draw(t_env *data);
 void			find_max_int(int **integer_tab, t_env *data);
 void			pythagore(t_env *data);
+char			**check_tab(char **string_tab);
 #endif

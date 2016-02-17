@@ -6,7 +6,7 @@
 /*   By: cfelbacq <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/19 15:30:16 by cfelbacq          #+#    #+#             */
-/*   Updated: 2016/02/16 16:07:44 by cfelbacq         ###   ########.fr       */
+/*   Updated: 2016/02/17 13:23:52 by cfelbacq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ int		count_len_nb(char **string_tab, t_env *data)
 	int tmp;
 
 	tmp = 0;
-	j = 0;
 	i = 0;
 	while (string_tab[i] != NULL)
 	{
